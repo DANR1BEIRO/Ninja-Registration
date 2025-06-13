@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
-public class Controller {
+public class NinjaController {
 
     @GetMapping("/boasvindas")  // Mapeia requisições HTTP GET. Usado para buscar/ler informações do servidor.
     public String boasVindas() {
