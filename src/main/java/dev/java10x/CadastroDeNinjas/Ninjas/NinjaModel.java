@@ -1,5 +1,6 @@
-package dev.java10x.CadastroDeNinjas;
+package dev.java10x.CadastroDeNinjas.Ninjas;
 
+import dev.java10x.CadastroDeNinjas.Missions.MissionModel;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,14 +14,27 @@ public class NinjaModel {
     private String name;
     private int age;
     private String email;
+    private NinjaRank rank;
+
+    // @ManyToOne (muitos para um): Muitos NinjaModel podem ter uma única MissionModel
+    @ManyToOne
+    @JoinColumn(name = "missions_id") // Foreign key (chave estrangeira)
+    private MissionModel missions;
+
+    /**
+     * Chave Estrangeira: Aparece toda vez que forem colocadas
+     * duas ou mais tabelas para se relacionarem.
+     * Tem um mapa para o que está vindo que cada tabela relacionada
+     */
 
     public NinjaModel() {
     }
 
-    public NinjaModel(String name, int age, String email) {
+    public NinjaModel(String name, int age, String email, NinjaRank rank) {
         this.name = name;
         this.age = age;
         this.email = email;
+        this.rank = rank;
     }
 
     public String getName() {
@@ -53,6 +67,14 @@ public class NinjaModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public NinjaRank getRank() {
+        return rank;
+    }
+
+    public void setRank(NinjaRank rank) {
+        this.rank = rank;
     }
 }
 
