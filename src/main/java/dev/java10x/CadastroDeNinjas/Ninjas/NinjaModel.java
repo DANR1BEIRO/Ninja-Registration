@@ -18,8 +18,12 @@ public class NinjaModel {
     private Long id; // apenas declara, pois o java faz a implementacao
 
     private String name;
+
     private int age;
+
+    @Column(unique = true)
     private String email;
+
     private NinjaRank rank;
 
     // @ManyToOne (muitos para um): Muitos NinjaModel podem ter uma única MissionModel
