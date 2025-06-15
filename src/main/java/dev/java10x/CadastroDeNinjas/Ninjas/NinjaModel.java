@@ -2,9 +2,15 @@ package dev.java10x.CadastroDeNinjas.Ninjas;
 
 import dev.java10x.CadastroDeNinjas.Missions.MissionModel;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_ninja_registration")
+@Data // cria automaticamente todos os getters e setters
+@NoArgsConstructor
+@AllArgsConstructor
 public class NinjaModel {
 
     @Id
@@ -26,56 +32,6 @@ public class NinjaModel {
      * duas ou mais tabelas para se relacionarem.
      * Tem um mapa para o que está vindo que cada tabela relacionada
      */
-
-    public NinjaModel() {
-    }
-
-    public NinjaModel(String name, int age, String email, NinjaRank rank) {
-        this.name = name;
-        this.age = age;
-        this.email = email;
-        this.rank = rank;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public NinjaRank getRank() {
-        return rank;
-    }
-
-    public void setRank(NinjaRank rank) {
-        this.rank = rank;
-    }
 }
 
 /*
