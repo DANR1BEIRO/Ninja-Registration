@@ -30,6 +30,7 @@ public class NinjaModel {
     @Column(name = "ninja_img_url")
     private String imgUrl;
 
+    @Enumerated(EnumType.STRING)
     private NinjaRank rank;
 
     // @ManyToOne (muitos para um): Muitos NinjaModel podem ter uma única MissionModel
