@@ -15,19 +15,19 @@ public class NinjaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ninja_id")
+    @Column(name = "id")
     private Long id; // apenas declara, pois o java faz a implementacao
 
-    @Column(name = "ninja_name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "ninja_age")
+    @Column(name = "age")
     private int age;
 
     @Column(unique = true)
     private String email;
 
-    @Column(name = "ninja_img_url")
+    @Column(name = "imgurl")
     private String imgUrl;
 
     @Enumerated(EnumType.STRING)
