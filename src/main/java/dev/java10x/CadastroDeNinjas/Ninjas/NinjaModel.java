@@ -1,5 +1,6 @@
 package dev.java10x.CadastroDeNinjas.Ninjas;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import dev.java10x.CadastroDeNinjas.Missions.MissionModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data // cria automaticamente todos os getters e setters
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonPropertyOrder({"id", "name", "age", "rank", "specialAbility", "email", "imgUrl", "missions"})
 public class NinjaModel {
 
     @Id
@@ -32,6 +34,9 @@ public class NinjaModel {
 
     @Enumerated(EnumType.STRING)
     private NinjaRank rank;
+
+    @Column(name = "specialAbility")
+    private String specialAbility;
 
     // @ManyToOne (muitos para um): Muitos NinjaModel podem ter uma única MissionModel
     @ManyToOne
