@@ -1,16 +1,32 @@
 package dev.java10x.CadastroDeNinjas.Missions;
 
+import dev.java10x.CadastroDeNinjas.Ninjas.NinjaModel;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/mission") // diz para o spring que tudo abaixo será mapeado
 public class MissionController {
 
+    private MissionService missionService;
+
+    public MissionController(MissionService missionService) {
+        this.missionService = missionService;
+    }
+
     // Mapeia requisições HTTP GET. Usado para buscar/ler informações do servidor.
     @GetMapping("/all")
-    public String displayAllMissions() {
-        return "Displaying all missions";
+    public List<MissionModel> displayAllMissions() {
+        return missionService.displayAllMissions();
     }
+
+    @GetMapping("/getbyid/{id}")
+    public Optional<MissionModel> getMissionById(@PathVariable Long id) {
+        return missionService.getMissionById(id);
+    }
+
 
     // Mapeia requisições HTTP POST. Usado para enviar/criar novos recursos no servidor.
     @PostMapping("/create")
