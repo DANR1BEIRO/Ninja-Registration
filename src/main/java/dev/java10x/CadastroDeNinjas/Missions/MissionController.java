@@ -30,8 +30,8 @@ public class MissionController {
 
     // Mapeia requisições HTTP POST. Usado para enviar/criar novos recursos no servidor.
     @PostMapping("/create")
-    public String createMission() {
-        return "Mission created!";
+    public MissionModel createMission(@RequestBody MissionModel mission) {
+        return missionService.createMission(mission);
     }
 
     // Mapeia requisições HTTP PUT. Usado para substituir/atualizar um recurso inteiro no servidor.

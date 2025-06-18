@@ -24,4 +24,8 @@ public class MissionService {
         }
         return missionsRepository.findById(id);
     }
+
+    public MissionModel createMission(MissionModel mission) {
+        return missionsRepository.save(mission);
+    }
 }
