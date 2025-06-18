@@ -24,17 +24,8 @@ public class NinjaService {
         }
         return ninjaRepository.findById(id);
     }
+
+    public NinjaModel createNinja(NinjaModel ninja) {
+        return ninjaRepository.save(ninja);
+    }
 }
-
-
-
-
-
-
-
-
-
-/*
- * O @Autowired é uma anotação que o Spring usa para injetar automaticamente uma
- * dependência (ou seja, um objeto de outra classe) dentro da sua classe atual,
- * sem você precisar criar esse objeto manualmente com new.*/
