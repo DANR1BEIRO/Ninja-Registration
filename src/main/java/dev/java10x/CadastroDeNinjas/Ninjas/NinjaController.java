@@ -45,9 +45,9 @@ public class NinjaController {
     }
 
     // Atualizar dados de um ninja (UPDATE)
-    @PutMapping("/updateid")
-    public String updateNinjaById() {
-        return "Updating ninja by ID ";
+    @PutMapping("/update/{id}")
+    public NinjaModel updateNinjaById(@PathVariable Long id, @RequestBody NinjaModel ninja) {
+        return ninjaService.updateNinja(id, ninja);
     }
 }
 
@@ -55,5 +55,5 @@ public class NinjaController {
 @GetMapping // Mapeia requisições HTTP GET. Usado para buscar/ler informações do servidor.
 @PostMapping // Mapeia requisições HTTP POST. Usado para enviar/criar novos recursos no servidor.
 @PutMapping // Mapeia requisições HTTP PUT. Usado para substituir/atualizar um recurso inteiro no servidor.
- @PatchMapping // Mapeia requisições HTTP PATCH. Usado para atualizações parciais de um recurso.
+@PatchMapping // Mapeia requisições HTTP PATCH. Usado para atualizações parciais de um recurso.
 @DeleteMapping // Mapeia requisições HTTP DELETE. Usado para remover um recurso do servidor.*/
