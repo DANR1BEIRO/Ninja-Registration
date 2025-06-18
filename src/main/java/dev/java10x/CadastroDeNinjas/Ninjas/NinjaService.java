@@ -28,4 +28,15 @@ public class NinjaService {
     public NinjaModel createNinja(NinjaModel ninja) {
         return ninjaRepository.save(ninja);
     }
+
+    public void deleteNinjaById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("The ID is null");
+        }
+        ninjaRepository.deleteById(id);
+    }
+
+    public void updateNinja(Long id){
+
+    }
 }
