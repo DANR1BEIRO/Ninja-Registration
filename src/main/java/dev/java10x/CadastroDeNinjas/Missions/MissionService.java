@@ -28,4 +28,11 @@ public class MissionService {
     public MissionModel createMission(MissionModel mission) {
         return missionsRepository.save(mission);
     }
+
+    public void deleteMissionById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Mission is null");
+        }
+        missionsRepository.deleteById(id);
+    }
 }

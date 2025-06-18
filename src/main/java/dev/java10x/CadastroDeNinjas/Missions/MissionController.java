@@ -27,23 +27,22 @@ public class MissionController {
         return missionService.getMissionById(id);
     }
 
-
     // Mapeia requisições HTTP POST. Usado para enviar/criar novos recursos no servidor.
     @PostMapping("/create")
     public MissionModel createMission(@RequestBody MissionModel mission) {
         return missionService.createMission(mission);
     }
 
+    // Mapeia requisições HTTP DELETE. Usado para remover um recurso do servidor.
+    @DeleteMapping("/delete/{id}")
+    public void deleteMissionById(@PathVariable Long id) {
+        missionService.deleteMissionById(id);
+    }
+
     // Mapeia requisições HTTP PUT. Usado para substituir/atualizar um recurso inteiro no servidor.
     @PutMapping("/update")
     public String updateMission() {
         return "Updating mission";
-    }
-
-    // Mapeia requisições HTTP DELETE. Usado para remover um recurso do servidor.
-    @DeleteMapping("/delete")
-    public String deleteMission() {
-        return "Mission deleted";
     }
 
 
