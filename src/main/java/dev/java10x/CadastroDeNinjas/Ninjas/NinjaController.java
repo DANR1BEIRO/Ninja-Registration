@@ -10,9 +10,11 @@ import java.util.Optional;
 public class NinjaController {
 
     private NinjaService ninjaService;
+    private NinjaMapper ninjaMapper;
 
-    public NinjaController(NinjaService ninjaService) {
+    public NinjaController(NinjaService ninjaService, NinjaMapper ninjaMapper) {
         this.ninjaService = ninjaService;
+        this.ninjaMapper = ninjaMapper;
     }
 
     @GetMapping("/boasvindas")
@@ -34,8 +36,10 @@ public class NinjaController {
 
     // Criar novo ninja (CREATE)
     @PostMapping("/create")
-    public NinjaModel createNinja(@RequestBody NinjaModel ninja) {
-        return ninjaService.createNinja(ninja);
+    public NinjaDTO createNinja(@RequestBody NinjaDTO ninjaDTO) {
+        NinjaModel ninjaModel = ninjaMapper.toEntity(ninjaDTO); //Converte DTO para Model (para o Service/Repository)
+        NinjaModel savedNinja = ninjaService.createNinja(ninjaModel); //Chama o Service para salvar (trabalha com Model)
+        return ninjaMapper.toDto(savedNinja); //Converte o Model salvo de volta para DTO (resposta da API)
     }
 
     // Remover ninja (DELETE)
