@@ -11,9 +11,11 @@ import java.util.Optional;
 public class MissionController {
 
     private MissionService missionService;
+    private MissionMapper missionMapper;
 
-    public MissionController(MissionService missionService) {
+    public MissionController(MissionService missionService, MissionMapper missionMapper) {
         this.missionService = missionService;
+        this.missionMapper = missionMapper;
     }
 
     // Mapeia requisições HTTP GET. Usado para buscar/ler informações do servidor.
@@ -29,8 +31,10 @@ public class MissionController {
 
     // Mapeia requisições HTTP POST. Usado para enviar/criar novos recursos no servidor.
     @PostMapping("/create")
-    public MissionModel createMission(@RequestBody MissionModel mission) {
-        return missionService.createMission(mission);
+    public MissionDTO createMission(@RequestBody MissionDTO missionDTO) {
+        MissionModel missionModel = missionMapper.toEntity(missionDTO);
+        MissionModel savedMission = missionService.createMission(missionModel);
+        return missionMapper.toDto(savedMission);
     }
 
     // Mapeia requisições HTTP DELETE. Usado para remover um recurso do servidor.
