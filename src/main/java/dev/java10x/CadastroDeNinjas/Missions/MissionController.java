@@ -40,9 +40,9 @@ public class MissionController {
     }
 
     // Mapeia requisições HTTP PUT. Usado para substituir/atualizar um recurso inteiro no servidor.
-    @PutMapping("/update")
-    public String updateMission() {
-        return "Updating mission";
+    @PutMapping("/update/{id}")
+    public MissionModel updateMission(@PathVariable Long id, @RequestBody MissionModel mission) {
+        return missionService.updateMission(id, mission);
     }
 
 
