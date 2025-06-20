@@ -1,10 +1,8 @@
 package dev.java10x.CadastroDeNinjas.Missions;
 
-import dev.java10x.CadastroDeNinjas.Ninjas.NinjaModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/mission") // diz para o spring que tudo abaixo será mapeado
@@ -18,19 +16,19 @@ public class MissionController {
 
     // Mapeia requisições HTTP GET. Usado para buscar/ler informações do servidor.
     @GetMapping("/all")
-    public List<MissionModel> displayAllMissions() {
+    public List<MissionDTO> displayAllMissions() {
         return missionService.displayAllMissions();
     }
 
     @GetMapping("/getbyid/{id}")
-    public Optional<MissionModel> getMissionById(@PathVariable Long id) {
+    public MissionDTO getMissionById(@PathVariable Long id) {
         return missionService.getMissionById(id);
     }
 
     // Mapeia requisições HTTP POST. Usado para enviar/criar novos recursos no servidor.
     @PostMapping("/create")
-    public MissionModel createMission(@RequestBody MissionModel mission) {
-        return missionService.createMission(mission);
+    public MissionDTO createMission(@RequestBody MissionDTO missionDTO) {
+        return missionService.createMission(missionDTO);
     }
 
     // Mapeia requisições HTTP DELETE. Usado para remover um recurso do servidor.
@@ -40,10 +38,8 @@ public class MissionController {
     }
 
     // Mapeia requisições HTTP PUT. Usado para substituir/atualizar um recurso inteiro no servidor.
-    @PutMapping("/update")
-    public String updateMission() {
-        return "Updating mission";
+    @PutMapping("/update/{id}")
+    public MissionDTO updateMission(@PathVariable Long id, @RequestBody MissionDTO mission) {
+        return missionService.updateMission(id, mission);
     }
-
-
 }
