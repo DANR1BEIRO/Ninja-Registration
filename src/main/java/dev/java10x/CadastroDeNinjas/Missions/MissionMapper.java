@@ -20,7 +20,10 @@ public class MissionMapper {
         missionModel.setId(missionDTO.getId());
         missionModel.setName(missionDTO.getName());
         missionModel.setRank(missionDTO.getRank());
-        missionModel.setNinjas(missionDTO.getNinjas());
+
+        if (missionDTO.getNinjas() != null) {
+            missionModel.setNinjas(missionDTO.getNinjas());
+        }
 
         return missionModel;
     }

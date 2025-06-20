@@ -4,29 +4,35 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MissionService {
 
     private MissionsRepository missionsRepository;
+    private MissionMapper missionMapper;
 
-    public MissionService(MissionsRepository missionsRepository) {
+    public MissionService(MissionsRepository missionsRepository, MissionMapper missionMapper) {
         this.missionsRepository = missionsRepository;
+        this.missionMapper = missionMapper;
     }
 
-    public List<MissionModel> displayAllMissions() {
-        return missionsRepository.findAll();
+    public List<MissionDTO> displayAllMissions() {
+        List<MissionModel> missions = missionsRepository.findAll();
+        return missions.stream()
+                .map(missionMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Optional<MissionModel> getMissionById(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Mission can't be null");
-        }
-        return missionsRepository.findById(id);
+    public MissionDTO getMissionById(Long id) {
+        Optional<MissionModel> missionById = missionsRepository.findById(id);
+        return missionById.map(missionMapper::toDto).orElse(null);
     }
 
-    public MissionModel createMission(MissionModel mission) {
-        return missionsRepository.save(mission);
+    public MissionDTO createMission(MissionDTO missionDTO) {
+        MissionModel missionModel = missionMapper.toEntity(missionDTO);
+        MissionModel savedMission = missionsRepository.save(missionModel);
+        return missionMapper.toDto(savedMission);
     }
 
     public void deleteMissionById(Long id) {
@@ -36,10 +42,13 @@ public class MissionService {
         missionsRepository.deleteById(id);
     }
 
-    public MissionModel updateMission(Long id, MissionModel mission) {
-        if (missionsRepository.existsById(id)) {
-            mission.setId(id);
-            return missionsRepository.save(mission);
+    public MissionDTO updateMission(Long id, MissionDTO missionDTO) {
+        Optional<MissionModel> missionExist = missionsRepository.findById(id);
+        if (missionExist.isPresent()) {
+            MissionModel updatedMission = missionMapper.toEntity(missionDTO);
+            updatedMission.setId(id);
+            MissionModel savedMission = missionsRepository.save(updatedMission);
+            return missionMapper.toDto(savedMission);
         }
         return null;
     }

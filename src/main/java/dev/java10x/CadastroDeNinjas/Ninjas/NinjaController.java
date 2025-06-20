@@ -1,20 +1,16 @@
 package dev.java10x.CadastroDeNinjas.Ninjas;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/ninja")
 public class NinjaController {
 
     private NinjaService ninjaService;
-    private NinjaMapper ninjaMapper;
 
-    public NinjaController(NinjaService ninjaService, NinjaMapper ninjaMapper) {
+    public NinjaController(NinjaService ninjaService) {
         this.ninjaService = ninjaService;
-        this.ninjaMapper = ninjaMapper;
     }
 
     @GetMapping("/boasvindas")
@@ -24,22 +20,21 @@ public class NinjaController {
 
     // Listar todos os ninjas (READ)
     @GetMapping("/all")
-    public List<NinjaModel> displayAllNinjas() {
+    public List<NinjaDTO> displayAllNinjas() {
         return ninjaService.displayAllNinjas();
     }
 
     // Consultar ninja por ID (READ)
     @GetMapping("/getbyid/{id}")
-    public Optional<NinjaModel> getNinjaById(@PathVariable Long id) {
+    public  NinjaDTO getNinjaById(@PathVariable Long id) {
         return ninjaService.getNinjaById(id);
     }
 
     // Criar novo ninja (CREATE)
     @PostMapping("/create")
     public NinjaDTO createNinja(@RequestBody NinjaDTO ninjaDTO) {
-        NinjaModel ninjaModel = ninjaMapper.toEntity(ninjaDTO); //Converte DTO para Model (para o Service/Repository)
-        NinjaModel savedNinja = ninjaService.createNinja(ninjaModel); //Chama o Service para salvar (trabalha com Model)
-        return ninjaMapper.toDto(savedNinja); //Converte o Model salvo de volta para DTO (resposta da API)
+        return ninjaService.createNinja(ninjaDTO);
+
     }
 
     // Remover ninja (DELETE)
@@ -50,7 +45,7 @@ public class NinjaController {
 
     // Atualizar dados de um ninja (UPDATE)
     @PutMapping("/update/{id}")
-    public NinjaModel updateNinjaById(@PathVariable Long id, @RequestBody NinjaModel ninja) {
+    public NinjaDTO updateNinjaById(@PathVariable Long id, @RequestBody NinjaDTO ninja) {
         return ninjaService.updateNinja(id, ninja);
     }
 }
