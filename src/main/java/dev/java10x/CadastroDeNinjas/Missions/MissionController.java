@@ -1,5 +1,7 @@
 package dev.java10x.CadastroDeNinjas.Missions;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,32 +16,58 @@ public class MissionController {
         this.missionService = missionService;
     }
 
-    // Mapeia requisições HTTP GET. Usado para buscar/ler informações do servidor.
     @GetMapping("/all")
-    public List<MissionDTO> displayAllMissions() {
-        return missionService.displayAllMissions();
+    public ResponseEntity<List<MissionDTO>> displayAllMissions() {
+        List<MissionDTO> missions = missionService.displayAllMissions();
+        return ResponseEntity.ok(missions);
     }
 
     @GetMapping("/getbyid/{id}")
-    public MissionDTO getMissionById(@PathVariable Long id) {
-        return missionService.getMissionById(id);
+    public ResponseEntity<?> getMissionById(@PathVariable Long id) {
+        MissionDTO missionDTO = missionService.getMissionById(id);
+
+        if (missionDTO != null) {
+            return ResponseEntity.ok(missionDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("ID " + id + " not found");
+        }
     }
 
-    // Mapeia requisições HTTP POST. Usado para enviar/criar novos recursos no servidor.
     @PostMapping("/create")
-    public MissionDTO createMission(@RequestBody MissionDTO missionDTO) {
-        return missionService.createMission(missionDTO);
+    public ResponseEntity<String> createMission(@RequestBody MissionDTO missionDTO) {
+        MissionDTO newMission = missionService.createMission(missionDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Mission " + newMission.getName() +
+                        " of rank " + newMission.getRank() + " created!");
     }
 
-    // Mapeia requisições HTTP DELETE. Usado para remover um recurso do servidor.
     @DeleteMapping("/delete/{id}")
-    public void deleteMissionById(@PathVariable Long id) {
-        missionService.deleteMissionById(id);
+    public ResponseEntity<String> deleteMissionById(@PathVariable Long id) {
+        MissionDTO missionDTO = missionService.getMissionById(id);
+
+        if (missionDTO != null) {
+            missionService.deleteMissionById(id);
+            return ResponseEntity.ok("Mission " + missionDTO.getName() + " (ID " + id + ") was deleted!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("ID " + id + " not found");
+        }
     }
 
-    // Mapeia requisições HTTP PUT. Usado para substituir/atualizar um recurso inteiro no servidor.
     @PutMapping("/update/{id}")
-    public MissionDTO updateMission(@PathVariable Long id, @RequestBody MissionDTO mission) {
-        return missionService.updateMission(id, mission);
+    public ResponseEntity<String> updateMission(@PathVariable Long id, @RequestBody MissionDTO missionDTO) {
+        MissionDTO updatedMission = missionService.updateMission(id, missionDTO);
+
+        if (updatedMission != null) {
+            return ResponseEntity.ok("Mission updated!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("ID " + id + " not found");
+        }
     }
 }
+
+
+
