@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/mission") // diz para o spring que tudo abaixo será mapeado
 public class MissionController {
 
-    private MissionService missionService;
+    private final MissionService missionService;
 
     public MissionController(MissionService missionService) {
         this.missionService = missionService;
