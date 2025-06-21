@@ -6,12 +6,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "tb_ninja_registration")
 @Data // cria automaticamente todos os getters e setters
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "missions")
 @JsonPropertyOrder({"id", "name", "age", "rank", "specialAbility", "email", "imgUrl", "missions"})
 public class NinjaModel {
 
